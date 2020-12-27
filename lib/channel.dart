@@ -1,9 +1,16 @@
 import 'aqueduct_pd.dart';
+import 'controllers/auth/registration_controller.dart';
 
 /// This type initializes an application.
 ///
 /// Override methods in this class to set up routes and initialize services like
 /// database connections. See http://aqueduct.io/docs/http/channel/.
+/// 
+  class MyConfiguration extends Configuration {
+  MyConfiguration(String configPath) : super.fromFile(File(configPath));
+
+  DatabaseConfiguration database;
+}
 class AqueductPdChannel extends ApplicationChannel {
   /// Initialize services in this method.
   ///
@@ -11,9 +18,23 @@ class AqueductPdChannel extends ApplicationChannel {
   /// and any other initialization required before constructing [entryPoint].
   ///
   /// This method is invoked prior to [entryPoint] being accessed.
+  
+   ManagedContext context;
+   
   @override
   Future prepare() async {
     logger.onRecord.listen((rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+     final config = MyConfiguration(options.configurationFilePath);
+
+    final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
+    final psc = PostgreSQLPersistentStore.fromConnectionInfo(
+        config.database.username,
+        config.database.password,
+        config.database.host,
+        config.database.port,
+        config.database.databaseName);        
+
+    context = ManagedContext(dataModel, psc);
   }
 
   /// Construct the request channel.
@@ -33,6 +54,10 @@ class AqueductPdChannel extends ApplicationChannel {
       .linkFunction((request) async {
         return Response.ok({"key": "value"});
       });
+
+    router
+        .route('/auth/registration')
+        .link(() => RegistrationController(context));
 
     return router;
   }
