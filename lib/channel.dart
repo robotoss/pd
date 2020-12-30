@@ -1,5 +1,8 @@
 import 'package:aqueduct_pd/aqueduct_pd.dart';
 
+import 'controllers/auth/registration_controller.dart';
+import 'controllers/auth/signup_controller.dart';
+
 /// This type initializes an application.
 ///
 /// Override methods in this class to set up routes and initialize services like
