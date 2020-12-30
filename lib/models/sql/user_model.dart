@@ -1,4 +1,4 @@
-import '../aqueduct_pd.dart';
+import '../../aqueduct_pd.dart';
 import 'user_role_model.dart';
 
 class User extends ManagedObject<_Users> implements _Users {}
