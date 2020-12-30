@@ -19,6 +19,8 @@ class _Users {
   String phoneNumber;
   @Column(nullable: true, unique: true)
   String email;
+  @Column(nullable: false)
+  String hashedPassword;
   @Column(nullable: true, unique: true)
   String pushToken;
   @Column(nullable: true)

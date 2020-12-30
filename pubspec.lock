@@ -30,7 +30,7 @@ packages:
     source: hosted
     version: "2.0.0-b1"
   args:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: args
       url: "https://pub.dartlang.org"
@@ -43,6 +43,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.4.2"
+  auth_header:
+    dependency: transitive
+    description:
+      name: auth_header
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.4"
   boolean_selector:
     dependency: transitive
     description:
@@ -107,7 +114,7 @@ packages:
     source: hosted
     version: "0.14.2"
   crypto:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: crypto
       url: "https://pub.dartlang.org"
@@ -163,12 +170,19 @@ packages:
     source: hosted
     version: "0.3.4"
   isolate_executor:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: isolate_executor
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.2+3"
+  jaguar_jwt:
+    dependency: "direct main"
+    description:
+      name: jaguar_jwt
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "2.1.6"
   js:
     dependency: transitive
     description:
@@ -184,7 +198,7 @@ packages:
     source: hosted
     version: "3.1.1"
   logging:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: logging
       url: "https://pub.dartlang.org"

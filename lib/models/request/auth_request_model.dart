@@ -3,7 +3,7 @@ class AuthRequest {
 
   factory AuthRequest.fromJson(Map<String, dynamic> json) {
     if (json == null) {
-      throw const FormatException('Null JSON in User constructor');
+      throw const FormatException('Null JSON in Auth constructor');
     }
     return AuthRequest(
       json['email'] as String,
