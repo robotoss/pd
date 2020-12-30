@@ -15,17 +15,15 @@ class RegistrationController extends ResourceController {
     final sendUserData = AuthRequest.fromJson(map);
     // Проверяю данные для регистрации
     if (sendUserData.email == null || sendUserData.password == null) {
-      return Response.badRequest(headers: {
-        "error_type": "blank_data",
-      }, body: {
-        "error": "Email или пароль отсутствуют."
-      });
+      return Response.badRequest(
+        headers: {"error_type": "blank_data"},
+        body: {"error": "Email или пароль отсутствуют."},
+      );
     } else if (sendUserData.password.length < 8) {
-      return Response.badRequest(headers: {
-        "error_type": "short_password",
-      }, body: {
-        "error": "Пароль должен состоять не менее чем из 8 символов."
-      },);
+      return Response.badRequest(
+        headers: {"error_type": "short_password"},
+        body: {"error": "Пароль должен состоять не менее чем из 8 символов."},
+      );
     }
 
     if (await Database(context).queryEmail(sendUserData.email)) {
@@ -39,12 +37,9 @@ class RegistrationController extends ResourceController {
       );
     } else {
       return Response.conflict(
-        body: {
-        "error": "Пользователь с таким Email уже существует."
-      },
-      );
+          body: {"error": "Пользователь с таким Email уже существует."});
     }
 
-    return Response.ok('message: Пользователь успешно добавлен');
+    return Response.ok({"message": "Пользователь успешно добавлен"});
   }
 }
