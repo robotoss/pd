@@ -1,5 +1,6 @@
 import 'aqueduct_pd.dart';
 import 'controllers/auth/registration_controller.dart';
+import 'controllers/auth/signup_controller.dart';
 
 /// This type initializes an application.
 ///
@@ -58,6 +59,8 @@ class AqueductPdChannel extends ApplicationChannel {
     router
         .route('/auth/registration')
         .link(() => RegistrationController(context));
+
+     router.route('/auth/login').link(() => SignupController(context));
 
     return router;
   }

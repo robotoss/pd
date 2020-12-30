@@ -25,14 +25,20 @@ class Database {
     }
   }
 
+  /// Вытаскиваю пользователя из базы
+  Future<User> getUserByEmail(String email) async {
+    // Проверяю есть ли пользователь в базе
+    final userQuery = Query<User>(context)
+      ..where((u) => u.email).equalTo(email);
+
+    final foundUser = await userQuery.fetchOne();
+
+    return foundUser;
+  }
+
   /// Сохраняю пользователя в базу
-  Future<void> registrationUser(
-    String userName,
-    String email,
-    String password,
-    int userRole,
-    int vkID
-  ) async {
+  Future<void> registrationUser(String userName, String email, String password,
+      int userRole, int vkID) async {
     // Хэширую пароль
     String _hashPassword(String password) {
       final salt = AuthUtility.generateRandomSalt();
