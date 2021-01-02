@@ -2,6 +2,7 @@ import 'package:aqueduct_pd/aqueduct_pd.dart';
 
 import 'controllers/auth/registration_controller.dart';
 import 'controllers/auth/signup_controller.dart';
+import 'documents/auth_doc.dart';
 
 /// This type initializes an application.
 ///
@@ -13,6 +14,8 @@ class MyConfiguration extends Configuration {
 
   DatabaseConfiguration database;
 }
+
+
 
 class AqueductPdChannel extends ApplicationChannel {
   /// Initialize services in this method.
@@ -26,17 +29,29 @@ class AqueductPdChannel extends ApplicationChannel {
   Future prepare() async {
     logger.onRecord.listen(
         (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
-    final config = MyConfiguration(options.configurationFilePath);
-
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
-    final psc = PostgreSQLPersistentStore.fromConnectionInfo(
-        config.database.username,
-        config.database.password,
-        config.database.host,
-        config.database.port,
-        config.database.databaseName);
+    final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo(
+        "pd_admin", "Qazmlp1q2w3e4r", "localhost", 5432, "pd_database");
 
-    context = ManagedContext(dataModel, psc);
+    context = ManagedContext(dataModel, persistentStore);
+    // final config = MyConfiguration(options.configurationFilePath);
+
+    // final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
+    // final psc = PostgreSQLPersistentStore.fromConnectionInfo(
+    //     config.database.username,
+    //     config.database.password,
+    //     config.database.host,
+    //     config.database.port,
+    //     config.database.databaseName);
+
+    // context = ManagedContext(dataModel, psc);
+  }
+
+  @override
+  void documentComponents(APIDocumentContext context) {
+    super.documentComponents(context);
+
+    SourceRepository().documentComponents(context);
   }
 
   /// Construct the request channel.

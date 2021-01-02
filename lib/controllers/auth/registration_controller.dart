@@ -1,4 +1,5 @@
 import 'package:aqueduct_pd/aqueduct_pd.dart';
+import 'package:aqueduct_pd/documents/auth_doc.dart';
 import 'package:aqueduct_pd/helpers/database_helper.dart';
 import 'package:aqueduct_pd/models/request/auth_request_model.dart';
 
@@ -41,5 +42,15 @@ class RegistrationController extends ResourceController {
     }
 
     return Response.ok({"message": "Пользователь успешно добавлен"});
+  }
+
+  @override
+  Map<String, APIResponse> documentOperationResponses(APIDocumentContext context, Operation operation) {
+    if (operation.method == "POST") {
+      return {
+        "200": APIResponse.schema("Successful response.", context.schema.getObjectWithType(SourceRepository))
+      };
+    }
+    return null;
   }
 }
