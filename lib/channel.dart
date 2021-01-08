@@ -48,7 +48,7 @@ class AqueductPdChannel extends ApplicationChannel {
   void documentComponents(APIDocumentContext context) {
     super.documentComponents(context);
 
-    SourceRepository().documentComponents(context);
+    AuthRepository().documentComponents(context);
   }
 
   /// Construct the request channel.

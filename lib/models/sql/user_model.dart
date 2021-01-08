@@ -15,22 +15,18 @@ class _Users {
 
   @Column(nullable: true)
   String address;
-  @Column(nullable: true)
+  @Column(nullable: false)
   String phoneNumber;
   @Column(nullable: true, unique: true)
   String email;
-  @Column(nullable: false)
-  String hashedPassword;
-  @Column(nullable: true, unique: true)
+  @Column(nullable: true)
   String pushToken;
   @Column(nullable: true)
   String appToken;
   @Column(nullable: true)
-  int img;
+  String img;
   @Column(nullable: true)
   String phoneModel;
   @Column(nullable: true)
   String phoneOS;
-  @Column(nullable: true, unique: true)
-  String vkId;
 }
