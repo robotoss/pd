@@ -22,8 +22,6 @@ class _Users {
   @Column(nullable: true)
   String pushToken;
   @Column(nullable: true)
-  String appToken;
-  @Column(nullable: true)
   String img;
   @Column(nullable: true)
   String phoneModel;
