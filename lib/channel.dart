@@ -1,6 +1,7 @@
 import 'package:aqueduct_pd/aqueduct_pd.dart';
 
 import 'controllers/auth/auth_controller.dart';
+import 'controllers/data/device_controller.dart';
 import 'controllers/data/user_controller.dart';
 import 'documents/auth_doc.dart';
 import 'helpers/auth_validator.dart';
@@ -71,10 +72,13 @@ class AqueductPdChannel extends ApplicationChannel {
 
     router
         .route('/data/user')
-        .link(() => Authorizer.bearer(
-              authServer,
-            ))
+        .link(() => Authorizer.bearer(authServer))
         .link(() => UserController(context));
+
+    router
+        .route('/data/device')
+        .link(() => Authorizer.bearer(authServer))
+        .link(() => DeviceController(context));
 
     return router;
   }

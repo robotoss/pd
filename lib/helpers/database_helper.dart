@@ -1,3 +1,4 @@
+import 'package:aqueduct_pd/models/request/user/device_model.dart';
 import 'package:aqueduct_pd/models/request/user/user_model.dart';
 import 'package:aqueduct_pd/models/sql/user_model.dart';
 
@@ -52,6 +53,23 @@ class Database {
       ..values.address = userRequest.address
       ..values.email = userRequest.email
       ..values.img = userRequest.img;
+
+    await userQuery.update();
+
+    return userQuery.fetchOne();
+  }
+
+  /// Обновляю данные поустройству
+  Future<User> updateDevice(
+    int userId,
+    DeviceRequest deviceRequest,
+  ) async {
+    final userQuery = Query<User>(context)..where((u) => u.id).equalTo(userId);
+
+    userQuery
+      ..values.pushToken = deviceRequest.pushToken
+      ..values.phoneModel = deviceRequest.phoneModel
+      ..values.phoneOS = deviceRequest.phoneOS;
 
     await userQuery.update();
 
