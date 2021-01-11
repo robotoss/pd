@@ -1,5 +1,6 @@
 import '../../aqueduct_pd.dart';
-import 'user_role_model.dart';
+
+enum UserType { admin, user, manager }
 
 class User extends ManagedObject<_Users> implements _Users {}
 
@@ -9,10 +10,8 @@ class _Users {
   int id;
   @Column(nullable: true)
   String fullName;
-
-  @Relate(#user)
-  UserRoleModel userRole;
-
+  @Column(nullable: false)
+  UserType role;
   @Column(nullable: true)
   String address;
   @Column(nullable: false)

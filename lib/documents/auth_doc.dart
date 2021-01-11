@@ -15,11 +15,7 @@ class AuthRepository implements APIComponentDocumenter {
           "auth_token": APISchemaObject.string(),
           "user_data": APISchemaObject.object({
             "id": APISchemaObject.integer(),
-            "role": APISchemaObject.object({
-              "id": APISchemaObject.integer(),
-              "name_ru": APISchemaObject.string(),
-              "name_en": APISchemaObject.string(),
-            }),
+            "role": APISchemaObject.string(),
             "name": APISchemaObject.string(),
             "address": APISchemaObject.string(),
             "phone_number": APISchemaObject.string(),

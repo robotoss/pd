@@ -21,11 +21,7 @@ class UserController extends ResourceController {
     } else {
       return Response.ok({
         "id": user.id,
-        "role": {
-          "id": user.userRole.id,
-          "name_ru": user.userRole.nameRu,
-          "name_en": user.userRole.nameEn,
-        },
+        "role": user.role.toString(),
         "name": user.fullName,
         "address": user.address,
         "phone_number": user.phoneNumber,
@@ -62,11 +58,7 @@ class UserController extends ResourceController {
     final newUserData = await Database(context).updateUser(userId, userRequest);
     return Response.ok({
       "id": newUserData.id,
-      "role": {
-        "id": newUserData.userRole.id,
-        "name_ru": newUserData.userRole.nameRu,
-        "name_en": newUserData.userRole.nameEn,
-      },
+      "role": newUserData.role.toString(),
       "name": newUserData.fullName,
       "address": newUserData.address,
       "phone_number": newUserData.phoneNumber,

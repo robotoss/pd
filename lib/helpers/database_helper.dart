@@ -24,11 +24,12 @@ class Database {
   }
 
   /// Сохраняю пользователя в базу
-  Future<void> registrationUserByPhone(String phoneNumber, int userRole) async {
+  Future<void> registrationUserByPhone(
+      String phoneNumber, UserType role) async {
     // Добавляю даннные модель
     final userQuery = Query<User>(context)
       ..values.phoneNumber = phoneNumber
-      ..values.userRole.id = userRole;
+      ..values.role = role;
     // Сохраняю модель в базе
     await userQuery.insert();
   }

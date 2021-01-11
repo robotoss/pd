@@ -42,7 +42,7 @@ class AuthenticationController extends ResourceController {
       // Создаю нового пользователя если данные не найдены
       await Database(context).registrationUserByPhone(
         phoneNumber,
-        3,
+        UserType.user,
       );
     }
     userData = await _dataBase.queryPhoneNumber(phoneNumber);
@@ -54,11 +54,7 @@ class AuthenticationController extends ResourceController {
         "auth_token": token,
         "user_data": {
           "id": userData.id,
-          "role": {
-            "id": userData.userRole.id,
-            "name_ru": userData.userRole.nameRu,
-            "name_en": userData.userRole.nameEn,
-          },
+          "role": userData.role.toString(),
           "name": userData.fullName,
           "address": userData.address,
           "phone_number": userData.phoneNumber,
