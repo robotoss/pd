@@ -4,7 +4,7 @@ class AuthRepository implements APIComponentDocumenter {
   @override
   void documentComponents(APIDocumentContext context) {
     final oauth2 =
-        APISecurityScheme.apiKey('auth_token', APIParameterLocation.header)
+        APISecurityScheme.apiKey('Authorization', APIParameterLocation.header)
           ..description = "Standard OAuth 2.0";
 
     context.securitySchemes.register("oauth2", oauth2);

@@ -15,19 +15,17 @@ class SecurityHelper {
   }
 
   /// Проверяю токен польователя для авторизации
-   int userIdByToken(String authHeader) {
-    final parts = authHeader.split(' ');
-    if (parts == null || parts.length != 2 || parts[0] != 'Bearer') {
-      return null;
-    }
+   int userIdByToken(String token) {
+
     const key = Properties.jwtSecret;
 
     try {
-      final userId = verifyJwtHS256Signature(parts[1], key).subject;
+      final userId = verifyJwtHS256Signature(token, key).subject;
       return int.parse(userId);
     } on JwtException {
       print('invalid token');
+      return null;
     }
-    return null;
+    
   }
 }

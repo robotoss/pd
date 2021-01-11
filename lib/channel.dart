@@ -34,7 +34,7 @@ class AqueductPdChannel extends ApplicationChannel {
         (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
     final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo(
-        "pd_admin", "Qazmlp1q2w3e4r", "localhost", 5432, "pd_database");
+        "pd_admin", "Qazmlp1q2w3e4r!", "localhost", 5432, "pd_database");
 
     context = ManagedContext(dataModel, persistentStore);
     // final config = MyConfiguration(options.configurationFilePath);

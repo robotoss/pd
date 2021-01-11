@@ -10,13 +10,8 @@ class UserController extends ResourceController {
   final ManagedContext context;
 
   @Operation.get()
-  Future<Response> getUserData(
-      @Bind.header("authorization") String authToken) async {
-    final userId = SecurityHelper().userIdByToken(authToken);
-    // Если токен не активный то возращаю 401 ошибку
-    if (userId == null) {
-      return Response.unauthorized();
-    }
+  Future<Response> getUserData() async {
+    final userId = int.parse(request.authorization.clientID);
 
     // Ищу пользователя с указаным id
     final user = await Database(context).getUserBuId(userId);
@@ -66,18 +61,18 @@ class UserController extends ResourceController {
     //  await getUpdateUserData(userQuery, sendUserData).update();
     final newUserData = await Database(context).updateUser(userId, userRequest);
     return Response.ok({
-        "id": newUserData.id,
-        "role": {
-          "id": newUserData.userRole.id,
-          "name_ru": newUserData.userRole.nameRu,
-          "name_en": newUserData.userRole.nameEn,
-        },
-        "name": newUserData.fullName,
-        "address": newUserData.address,
-        "phone_number": newUserData.phoneNumber,
-        "img": newUserData.img,
-        "email": newUserData.email,
-      });
+      "id": newUserData.id,
+      "role": {
+        "id": newUserData.userRole.id,
+        "name_ru": newUserData.userRole.nameRu,
+        "name_en": newUserData.userRole.nameEn,
+      },
+      "name": newUserData.fullName,
+      "address": newUserData.address,
+      "phone_number": newUserData.phoneNumber,
+      "img": newUserData.img,
+      "email": newUserData.email,
+    });
   }
 }
 
