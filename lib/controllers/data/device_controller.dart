@@ -1,5 +1,4 @@
 import 'package:aqueduct_pd/aqueduct_pd.dart';
-import 'package:aqueduct_pd/documents/auth_doc.dart';
 import 'package:aqueduct_pd/helpers/database_helper.dart';
 import 'package:aqueduct_pd/models/request/user/device_model.dart';
 
@@ -18,18 +17,19 @@ class DeviceController extends ResourceController {
 
     return Response.ok({"message": "Device data updated"});
   }
+
+   @override
+  Map<String, APIResponse> documentOperationResponses(
+      APIDocumentContext context, Operation operation) {
+    if (operation.method == "POST") {
+      return {
+        "200": APIResponse.schema(
+          "Success",
+          context.schema["User"],
+        )
+      };
+    }
+    return null;
+  }
 }
 
-@override
-Map<String, APIResponse> documentOperationResponses(
-    APIDocumentContext context, Operation operation) {
-  if (operation.method == "POST") {
-    return {
-      "200": APIResponse.schema(
-        "AuthRepositoryOk",
-        context.schema["AuthRepositoryError"],
-      )
-    };
-  }
-  return null;
-}

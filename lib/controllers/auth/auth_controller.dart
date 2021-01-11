@@ -1,4 +1,3 @@
-import 'package:aqueduct_pd/documents/auth_doc.dart';
 import 'package:aqueduct_pd/helpers/database_helper.dart';
 import 'package:aqueduct_pd/helpers/google_helper.dart';
 import 'package:aqueduct_pd/helpers/security_helper.dart';
@@ -64,26 +63,26 @@ class AuthenticationController extends ResourceController {
       },
     );
   }
-}
 
-@override
-Map<String, APIResponse> documentOperationResponses(
-    APIDocumentContext context, Operation operation) {
-  if (operation.method == "POST") {
-    return {
-      "200": APIResponse.schema(
-        "AuthRepository",
-        context.schema.getObjectWithType(AuthRepository),
-      ),
-      "500": APIResponse.schema(
-        "AuthRepositoryError",
-        context.schema["AuthRepositoryError"],
-      ),
-      "409": APIResponse.schema(
-        "AuthRepositoryError",
-        context.schema["AuthRepositoryError"],
-      )
-    };
+  @override
+  Map<String, APIResponse> documentOperationResponses(
+      APIDocumentContext context, Operation operation) {
+    if (operation.method == "POST") {
+      return {
+        "200": APIResponse.schema(
+          "Success",
+          context.schema["UserWithToken"],
+        ),
+        "500": APIResponse.schema(
+          "Server Error",
+          context.schema["Error"],
+        ),
+        "409": APIResponse.schema(
+          "Data Error",
+          context.schema["Error"],
+        )
+      };
+    }
+    return null;
   }
-  return null;
 }

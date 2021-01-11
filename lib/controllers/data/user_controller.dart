@@ -1,7 +1,5 @@
 import 'package:aqueduct_pd/aqueduct_pd.dart';
-import 'package:aqueduct_pd/documents/auth_doc.dart';
 import 'package:aqueduct_pd/helpers/database_helper.dart';
-import 'package:aqueduct_pd/helpers/security_helper.dart';
 import 'package:aqueduct_pd/models/request/user/user_model.dart';
 
 class UserController extends ResourceController {
@@ -49,26 +47,25 @@ class UserController extends ResourceController {
       "email": newUserData.email,
     });
   }
-}
 
-@override
-Map<String, APIResponse> documentOperationResponses(
-    APIDocumentContext context, Operation operation) {
-  if (operation.method == "POST") {
-    return {
-      "200": APIResponse.schema(
-        "UserUpdate",
-        context.schema.getObjectWithType(AuthRepository),
-      ),
-      "500": APIResponse.schema(
-        "AuthRepositoryError",
-        context.schema["AuthRepositoryError"],
-      ),
-      "409": APIResponse.schema(
-        "AuthRepositoryError",
-        context.schema["AuthRepositoryError"],
-      )
-    };
+  @override
+  Map<String, APIResponse> documentOperationResponses(
+      APIDocumentContext context, Operation operation) {
+    if (operation.method == "GET") {
+      return {
+        "200": APIResponse.schema(
+          "Success",
+          context.schema["User"],
+        )
+      };
+    } else if (operation.method == "POST") {
+      return {
+        "200": APIResponse.schema(
+          "Success",
+          context.schema["User"],
+        )
+      };
+    }
+    return null;
   }
-  return null;
 }
