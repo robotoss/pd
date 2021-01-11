@@ -1,3 +1,4 @@
+import 'package:aqueduct_pd/models/request/user/user_model.dart';
 import 'package:aqueduct_pd/models/sql/user_model.dart';
 
 import '../aqueduct_pd.dart';
@@ -30,5 +31,28 @@ class Database {
       ..values.userRole.id = userRole;
     // Сохраняю модель в базе
     await userQuery.insert();
+  }
+
+  /// Поиск пользователя по id
+  Future<User> getUserBuId(int userId) async {
+    final userQuery = Query<User>(context)..where((u) => u.id).equalTo(userId);
+    return await userQuery.fetchOne();
+  }
+
+  /// Обновляю данные пользователя
+  Future<User> updateUser(
+    int userId,
+    UserRequst userRequst,
+  ) async {
+    final userQuery = Query<User>(context)..where((u) => u.id).equalTo(userId);
+
+    // userQuery
+    //   ..values.fullName = userRequst.userName
+    //   ..values.address = userRequst.city
+    //   ..values.email = userRequst.country;
+
+    await userQuery.update();
+
+    return userQuery.fetchOne();
   }
 }

@@ -13,4 +13,21 @@ class SecurityHelper {
     const String secret = Properties.jwtSecret;
     return issueJwtHS256(claimSet, secret);
   }
+
+  /// Проверяю токен польователя для авторизации
+   int userIdByToken(String authHeader) {
+    final parts = authHeader.split(' ');
+    if (parts == null || parts.length != 2 || parts[0] != 'Bearer') {
+      return null;
+    }
+    const key = Properties.jwtSecret;
+
+    try {
+      final userId = verifyJwtHS256Signature(parts[1], key).subject;
+      return int.parse(userId);
+    } on JwtException {
+      print('invalid token');
+    }
+    return null;
+  }
 }
