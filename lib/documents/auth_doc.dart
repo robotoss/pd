@@ -3,11 +3,14 @@ import 'package:aqueduct_pd/aqueduct_pd.dart';
 class AuthRepository implements APIComponentDocumenter {
   @override
   void documentComponents(APIDocumentContext context) {
+
     final oauth2 =
         APISecurityScheme.apiKey('Authorization', APIParameterLocation.header)
           ..description = "Standard OAuth 2.0";
 
     context.securitySchemes.register("oauth2", oauth2);
+
+    // context.document.servers = [APIServerDescription(Uri(host: '192.168.31.119'))];
 
     context.schema.register(
       "UserWithToken",

@@ -5,17 +5,13 @@ import 'controllers/data/device_controller.dart';
 import 'controllers/data/user_controller.dart';
 import 'documents/auth_doc.dart';
 import 'helpers/auth_validator.dart';
+import 'helpers/configuration.dart';
 
 /// This type initializes an application.
 ///
 /// Override methods in this class to set up routes and initialize services like
 /// database connections. See http://aqueduct.io/docs/http/channel/.
 ///
-class MyConfiguration extends Configuration {
-  MyConfiguration(String configPath) : super.fromFile(File(configPath));
-
-  DatabaseConfiguration database;
-}
 
 class AqueductPdChannel extends ApplicationChannel {
   /// Initialize services in this method.
@@ -29,15 +25,15 @@ class AqueductPdChannel extends ApplicationChannel {
 
   @override
   Future prepare() async {
-    authServer = BasicValidator();
-
     logger.onRecord.listen(
         (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
+
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
     final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo(
         "pd_admin", "Qazmlp1q2w3e4r!", "localhost", 5432, "pd_database");
 
     context = ManagedContext(dataModel, persistentStore);
+
     // final config = MyConfiguration(options.configurationFilePath);
 
     // final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
@@ -49,6 +45,8 @@ class AqueductPdChannel extends ApplicationChannel {
     //     config.database.databaseName);
 
     // context = ManagedContext(dataModel, psc);
+
+    authServer = BasicValidator();
   }
 
   @override
