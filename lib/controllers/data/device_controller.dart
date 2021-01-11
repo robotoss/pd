@@ -26,8 +26,8 @@ Map<String, APIResponse> documentOperationResponses(
   if (operation.method == "POST") {
     return {
       "200": APIResponse.schema(
-        "UserUpdate",
-        context.schema.getObjectWithType(AuthRepository),
+        "AuthRepositoryOk",
+        context.schema["AuthRepositoryError"],
       )
     };
   }

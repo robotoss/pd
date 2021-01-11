@@ -47,5 +47,8 @@ class AuthRepository implements APIComponentDocumenter {
 
     context.schema.register("AuthRepositoryError",
         APISchemaObject.object({"error": APISchemaObject.string()}));
+    
+    context.schema.register("AuthRepositoryOk",
+        APISchemaObject.object({"message": APISchemaObject.string()}));
   }
 }
