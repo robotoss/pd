@@ -3,6 +3,12 @@ import 'package:aqueduct_pd/aqueduct_pd.dart';
 class AuthRepository implements APIComponentDocumenter {
   @override
   void documentComponents(APIDocumentContext context) {
+    final oauth2 =
+        APISecurityScheme.apiKey('auth_token', APIParameterLocation.header)
+          ..description = "Standard OAuth 2.0";
+
+    context.securitySchemes.register("oauth2", oauth2);
+
     context.schema.register(
         "AuthRepository",
         APISchemaObject.object({
@@ -23,7 +29,8 @@ class AuthRepository implements APIComponentDocumenter {
         }),
         representation: AuthRepository);
 
-    context.schema.register("UserUpdate",
+    context.schema.register(
+        "UserUpdate",
         APISchemaObject.object({
           "auth_token": APISchemaObject.string(),
           "user_data": APISchemaObject.object({
@@ -41,8 +48,6 @@ class AuthRepository implements APIComponentDocumenter {
           })
         }),
         representation: AuthRepository);
-
-
 
     context.schema.register("AuthRepositoryError",
         APISchemaObject.object({"error": APISchemaObject.string()}));

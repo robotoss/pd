@@ -3,6 +3,7 @@ import 'package:aqueduct_pd/aqueduct_pd.dart';
 import 'controllers/auth/auth_controller.dart';
 import 'controllers/data/user_controller.dart';
 import 'documents/auth_doc.dart';
+import 'helpers/auth_validator.dart';
 
 /// This type initializes an application.
 ///
@@ -23,26 +24,30 @@ class AqueductPdChannel extends ApplicationChannel {
   ///
   /// This method is invoked prior to [entryPoint] being accessed.
   ManagedContext context;
+  BasicValidator authServer;
+
   @override
   Future prepare() async {
+    authServer = BasicValidator();
+
     logger.onRecord.listen(
         (rec) => print("$rec ${rec.error ?? ""} ${rec.stackTrace ?? ""}"));
-    // final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
-    // final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo(
-    //     "pd_admin", "Qazmlp1q2w3e4r", "localhost", 5432, "pd_database");
-
-    // context = ManagedContext(dataModel, persistentStore);
-    final config = MyConfiguration(options.configurationFilePath);
-
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
-    final psc = PostgreSQLPersistentStore.fromConnectionInfo(
-        config.database.username,
-        config.database.password,
-        config.database.host,
-        config.database.port,
-        config.database.databaseName);
+    final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo(
+        "pd_admin", "Qazmlp1q2w3e4r", "localhost", 5432, "pd_database");
 
-    context = ManagedContext(dataModel, psc);
+    context = ManagedContext(dataModel, persistentStore);
+    // final config = MyConfiguration(options.configurationFilePath);
+
+    // final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
+    // final psc = PostgreSQLPersistentStore.fromConnectionInfo(
+    //     config.database.username,
+    //     config.database.password,
+    //     config.database.host,
+    //     config.database.port,
+    //     config.database.databaseName);
+
+    // context = ManagedContext(dataModel, psc);
   }
 
   @override
@@ -62,17 +67,14 @@ class AqueductPdChannel extends ApplicationChannel {
   Controller get entryPoint {
     final router = Router();
 
-    // Prefer to use `link` instead of `linkFunction`.
-    // See: https://aqueduct.io/docs/http/request_controller/
-    // router
-    //   .route("/example")
-    //   .linkFunction((request) async {
-    //     return Response.ok({"key": "value"});
-    //   });
-
     router.route('/auth/login').link(() => AuthenticationController(context));
 
-    router.route('/data/user').link(() => UserController(context));
+    router
+        .route('/data/user')
+        .link(() => Authorizer.bearer(
+              authServer,
+            ))
+        .link(() => UserController(context));
 
     return router;
   }
