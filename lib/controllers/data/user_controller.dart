@@ -33,29 +33,12 @@ class UserController extends ResourceController {
 
   @Operation.post()
   Future<Response> updateUserData(
-    @Bind.header("authorization") String authToken,
-    @Bind.body() UserRequst userRequest,
+    @Bind.body() UserRequest userRequest,
   ) async {
-    print(userRequest);
-    final userId = SecurityHelper().userIdByToken(authToken);
-    // Если токен не активный то возращаю 401 ошибку
-    if (userId == null) {
-      return Response.unauthorized();
-    }
+    final userId = int.parse(request.authorization.clientID);
 
-    //  // Обрабатываю что прислал клиент
-    // final map = await request.body.decode<Map<String, dynamic>>();
-    // final UpdateUserData sendUserData = UpdateUserData.fromJson(map);
-    // if(sendUserData == null){
-    //   return Response.badRequest();
-    // }
-
-    //   // Ищу пользователя с указаным email
-    //   final userQuery = Query<User>(context)
-    //     ..where((u) => u.id).equalTo(int.parse(userId));
-
-    //  await getUpdateUserData(userQuery, sendUserData).update();
     final newUserData = await Database(context).updateUser(userId, userRequest);
+
     return Response.ok({
       "id": newUserData.id,
       "role": newUserData.role.toString(),

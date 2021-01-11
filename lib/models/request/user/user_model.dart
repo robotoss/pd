@@ -1,20 +1,27 @@
 import 'package:aqueduct_pd/aqueduct_pd.dart';
 
-class UserRequst extends Serializable{
-  String id;
-  String name;
+class UserRequest extends Serializable{
+  String fullName;
+  String address;
+  String email;
+  String img;
 
   @override
   void readFromMap(Map<String, dynamic> map) {
-    id = map['id'] as String;
-    name = map['name'] as String;
+    fullName = map['fullName'] as String;
+    address = map['address'] as String;
+    email = map['email'] as String;
+    img = map['img'] as String;
   }
 
   @override
   Map<String, dynamic> asMap() {
     return {
-      'id': id,
-      'name': name
+      'fullName': fullName,
+      'address': address,
+      'email': email,
+      'img': img,
+      
     };
   }
 }

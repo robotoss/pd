@@ -43,14 +43,15 @@ class Database {
   /// Обновляю данные пользователя
   Future<User> updateUser(
     int userId,
-    UserRequst userRequst,
+    UserRequest userRequest,
   ) async {
     final userQuery = Query<User>(context)..where((u) => u.id).equalTo(userId);
 
-    // userQuery
-    //   ..values.fullName = userRequst.userName
-    //   ..values.address = userRequst.city
-    //   ..values.email = userRequst.country;
+    userQuery
+      ..values.fullName = userRequest.fullName
+      ..values.address = userRequest.address
+      ..values.email = userRequest.email
+      ..values.img = userRequest.img;
 
     await userQuery.update();
 
