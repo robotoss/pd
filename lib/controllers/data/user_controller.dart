@@ -35,17 +35,9 @@ class UserController extends ResourceController {
   ) async {
     final userId = int.parse(request.authorization.clientID);
 
-    final newUserData = await Database(context).updateUser(userId, userRequest);
+     await Database(context).updateUser(userId, userRequest);
 
-    return Response.ok({
-      "id": newUserData.id,
-      "role": newUserData.role.toString(),
-      "name": newUserData.fullName,
-      "address": newUserData.address,
-      "phone_number": newUserData.phoneNumber,
-      "img": newUserData.img,
-      "email": newUserData.email,
-    });
+    return Response.ok({'message' : 'User updated'});
   }
 
   @override
@@ -62,7 +54,7 @@ class UserController extends ResourceController {
       return {
         "200": APIResponse.schema(
           "Success",
-          context.schema["User"],
+          context.schema["Ok"],
         )
       };
     }
