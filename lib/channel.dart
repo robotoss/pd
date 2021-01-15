@@ -3,6 +3,8 @@ import 'package:aqueduct_pd/aqueduct_pd.dart';
 import 'controllers/auth/auth_controller.dart';
 import 'controllers/data/device_controller.dart';
 import 'controllers/data/user_controller.dart';
+import 'controllers/services/car_marks_controller.dart';
+import 'controllers/services/car_models_controller.dart';
 import 'controllers/services/vin_controller.dart';
 import 'documents/auth_doc.dart';
 import 'helpers/auth_validator.dart';
@@ -78,11 +80,20 @@ class AqueductPdChannel extends ApplicationChannel {
         .route('/data/device')
         .link(() => Authorizer.bearer(authServer))
         .link(() => DeviceController(context));
-    
+
     router
         .route('/services/vin')
         .link(() => Authorizer.bearer(authServer))
         .link(() => VinController(context));
+
+    router
+        .route('/services/carModels')
+        .link(() => Authorizer.bearer(authServer))
+        .link(() => CarModelsController(context));
+    router
+        .route('/services/carMarks')
+        .link(() => Authorizer.bearer(authServer))
+        .link(() => CarMarksController(context));
 
     return router;
   }

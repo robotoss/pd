@@ -53,13 +53,13 @@ class VinController extends ResourceController {
   void documentComponents(APIDocumentContext context) {
     super.documentComponents(context);
 
-    final carModelMarkSchema = CarModelMarkModel().documentSchema(context);
+    // final carModelMarkSchema = CarModelMarkModel().documentSchema(context);
     final carByVinModelSchema = CarByVinModel().documentSchema(context);
-    context.schema.register(
-      "CarModelAndMark",
-      carModelMarkSchema,
-      representation: CarModelMarkModel,
-    );
+    // context.schema.register(
+    //   "CarModelAndMark",
+    //   carModelMarkSchema,
+    //   representation: CarModelMarkModel,
+    // );
     context.schema.register(
       "CarByVin",
       carByVinModelSchema,
@@ -74,7 +74,7 @@ class VinController extends ResourceController {
       return {
         "200": APIResponse.schema(
           "Success",
-          context.schema.getObjectWithType(CarByVinModel),
+          context.schema["CarByVin"],
         )
       };
     }

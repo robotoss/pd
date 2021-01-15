@@ -1,5 +1,5 @@
 import 'package:aqueduct_pd/aqueduct_pd.dart';
-import 'package:aqueduct_pd/models/request/user/user_model.dart';
+import 'package:aqueduct_pd/models/request/services/car_model_mark_model.dart';
 
 class AuthRepository implements APIComponentDocumenter {
   @override
@@ -10,11 +10,17 @@ class AuthRepository implements APIComponentDocumenter {
 
     context.securitySchemes.register("oauth2", oauth2);
 
-    final userSchema = UserResponse().documentSchema(context);
+    final carModelMarkSchema = CarModelMarkModel().documentSchema(context);
     context.schema.register(
-      "UserResponse",
-      userSchema,
-      representation: UserResponse,
+      'CarModelAndMark',
+      carModelMarkSchema,
+      representation: CarModelMarkModel,
+    );
+
+    context.schema.register(
+      "CarModelAndMarkList",
+      APISchemaObject.array(ofSchema: carModelMarkSchema),
+      // representation: CarModelMarkModel,
     );
 
     context.schema.register(

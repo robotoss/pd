@@ -66,18 +66,6 @@ class AuthenticationController extends ResourceController {
   }
 
   @override
-  void documentComponents(APIDocumentContext context) {
-    super.documentComponents(context);
-
-    final userSchema = UserResponse().documentSchema(context);
-    context.schema.register(
-      "CarModelAndMark",
-      userSchema,
-      representation: UserResponse,
-    );
-  }
-
-  @override
   Map<String, APIResponse> documentOperationResponses(
       APIDocumentContext context, Operation operation) {
     if (operation.method == "POST") {
