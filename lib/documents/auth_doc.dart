@@ -29,6 +29,22 @@ class AuthRepository implements APIComponentDocumenter {
     );
 
     context.schema.register(
+      "CarByVin",
+      APISchemaObject.object({
+        "auth_token": APISchemaObject.string(),
+        "user_data": APISchemaObject.object({
+          "id": APISchemaObject.integer(),
+          "role": APISchemaObject.string(),
+          "name": APISchemaObject.string(),
+          "address": APISchemaObject.string(),
+          "phone_number": APISchemaObject.string(),
+          "img": APISchemaObject.string(),
+          "email": APISchemaObject.string(),
+        })
+      }),
+    );
+
+    context.schema.register(
       "User",
       APISchemaObject.object({
         "auth_token": APISchemaObject.string(),
