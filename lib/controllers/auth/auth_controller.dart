@@ -1,6 +1,7 @@
 import 'package:aqueduct_pd/helpers/database_helper.dart';
 import 'package:aqueduct_pd/helpers/google_helper.dart';
 import 'package:aqueduct_pd/helpers/security_helper.dart';
+import 'package:aqueduct_pd/models/request/user/user_model.dart';
 import 'package:aqueduct_pd/models/sql/user_model.dart';
 
 import '../../aqueduct_pd.dart';
@@ -61,6 +62,18 @@ class AuthenticationController extends ResourceController {
           "email": userData.email,
         },
       },
+    );
+  }
+
+  @override
+  void documentComponents(APIDocumentContext context) {
+    super.documentComponents(context);
+
+    final userSchema = UserResponse().documentSchema(context);
+    context.schema.register(
+      "CarModelAndMark",
+      userSchema,
+      representation: UserResponse,
     );
   }
 
