@@ -60,6 +60,7 @@ class AuthenticationController extends ResourceController {
           "phone_number": userData.phoneNumber,
           "img": userData.img,
           "email": userData.email,
+          "cars": userData.cars.map((car) => car.asMap()).toList(),
         },
       },
     );

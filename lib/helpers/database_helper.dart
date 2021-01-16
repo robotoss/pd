@@ -13,7 +13,8 @@ class Database {
   Future<User> queryPhoneNumber(String phoneNumber) async {
     // Проверяю есть ли пользователь в базе
     final userQuery = Query<User>(context)
-      ..where((u) => u.phoneNumber).equalTo(phoneNumber);
+      ..where((u) => u.phoneNumber).equalTo(phoneNumber)
+      ..join(set: (u) => u.cars);
 
     final foundUser = await userQuery.fetchOne();
 

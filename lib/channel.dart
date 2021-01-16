@@ -33,7 +33,7 @@ class AqueductPdChannel extends ApplicationChannel {
 
     final dataModel = ManagedDataModel.fromCurrentMirrorSystem();
     final persistentStore = PostgreSQLPersistentStore.fromConnectionInfo(
-        "pd_admin", "Qazmlp1q2w3e4r!", "localhost", 5432, "pd_database");
+        "adminpd", "Dom2natnt", "89.219.32.120", 5432, "pddb");
 
     context = ManagedContext(dataModel, persistentStore);
 

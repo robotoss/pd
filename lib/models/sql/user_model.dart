@@ -1,4 +1,5 @@
 import '../../aqueduct_pd.dart';
+import 'user_cars_models.dart';
 
 enum UserType { admin, user, manager }
 
@@ -12,6 +13,7 @@ class _Users {
   String fullName;
   @Column(nullable: false)
   UserType role;
+  ManagedSet<UserCars> cars;
   @Column(nullable: true)
   String address;
   @Column(nullable: false)

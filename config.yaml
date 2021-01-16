@@ -1,6 +1,6 @@
 database:
-  username: pd_admin
-  password: Qazmlp1q2w3e4r!
-  host: localhost
+  username: adminpd
+  password: Dom2natnt
+  host: 89.219.32.120
   port: 5432
-  databaseName: pd_database
+  databaseName: pddb
