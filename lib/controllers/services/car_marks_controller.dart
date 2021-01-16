@@ -16,9 +16,9 @@ class CarMarksController extends ResourceController {
       );
       final carMarks = carMarksOrModelFromJson(_carMarksResponse.body);
 
-      return Response.ok({
-        'carMarks': carMarks.map((e) => e.asMap()).toList(),
-      });
+      return Response.ok(
+        carMarks.map((e) => e.asMap()).toList(),
+      );
     } catch (e) {
       return Response.badRequest(body: {"error": "Произошла ошибка"});
     }

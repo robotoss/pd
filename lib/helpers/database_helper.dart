@@ -1,5 +1,6 @@
 import 'package:aqueduct_pd/models/request/user/device_model.dart';
 import 'package:aqueduct_pd/models/request/user/user_model.dart';
+import 'package:aqueduct_pd/models/sql/user_cars_models.dart';
 import 'package:aqueduct_pd/models/sql/user_model.dart';
 
 import '../aqueduct_pd.dart';
@@ -75,5 +76,36 @@ class Database {
     await userQuery.update();
 
     return userQuery.fetchOne();
+  }
+
+  /// Поиск авто пользователя
+  Future<List<UserCars>> getUserCars(int userId) async {
+    final carsQuery = Query<UserCars>(context)
+      ..where((u) => u.user.id).equalTo(userId);
+    return await carsQuery.fetch();
+  }
+
+  /// Добавляю новый авто
+  Future<void> addNewCar(
+    int userId,
+    UserCars car,
+  ) async {
+    final query = Query<UserCars>(context)
+      ..values.id = null
+      ..values.user.id = userId
+      ..values.carVin = car.carVin
+      ..values.carName = car.carName
+      ..values.carMark = car.carMark
+      ..values.carLogoImg = car.carLogoImg
+      ..values.carYear = car.carYear;
+
+    await query.insert();
+  }
+
+  /// Удалить авто
+  Future<void> deleteUserCars(int carId) async {
+    final carsQuery = Query<UserCars>(context)
+      ..where((u) => u.id).equalTo(carId);
+    return await carsQuery.delete();
   }
 }
