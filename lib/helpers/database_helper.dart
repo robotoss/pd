@@ -91,7 +91,6 @@ class Database {
     UserCars car,
   ) async {
     final query = Query<UserCars>(context)
-      ..values.id = null
       ..values.user.id = userId
       ..values.carVin = car.carVin
       ..values.carName = car.carName
