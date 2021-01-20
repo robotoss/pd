@@ -86,7 +86,7 @@ class Database {
   }
 
   /// Добавляю новый авто
-  Future<void> addNewCar(
+  Future<UserCars> addNewCar(
     int userId,
     UserCars car,
   ) async {
@@ -95,10 +95,11 @@ class Database {
       ..values.carVin = car.carVin
       ..values.carName = car.carName
       ..values.carMark = car.carMark
+      ..values.carModel = car.carModel
       ..values.carLogoImg = car.carLogoImg
       ..values.carYear = car.carYear;
 
-    await query.insert();
+    return await query.insert();
   }
 
   /// Удалить авто

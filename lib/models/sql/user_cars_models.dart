@@ -10,14 +10,14 @@ class _UserCars {
   int id;
   @Relate(#cars)
   User user;
-  // @Column(nullable: true)
-  // int userId;
   @Column(nullable: true)
   String carVin;
   @Column(nullable: true)
   String carName;
   @Column(nullable: true)
   String carMark;
+  @Column(nullable: true)
+  String carModel;
   @Column(nullable: true)
   String carLogoImg;
   @Column(nullable: true)

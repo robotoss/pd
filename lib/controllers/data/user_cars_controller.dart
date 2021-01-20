@@ -26,23 +26,23 @@ class UserCarsController extends ResourceController {
     }
   }
 
-  @Operation.delete()
-  Future<Response> deleteUserCars(@Bind.query('car_id') int carId) async {
-    // Удаляю авто из базы
-    await Database(context).deleteUserCars(carId);
-
-    return Response.ok({'message': 'Car delete'});
-  }
-
   @Operation.post()
   Future<Response> addUserCar(
     @Bind.body() UserCars car,
   ) async {
     final userId = int.parse(request.authorization.clientID);
 
-    await Database(context).addNewCar(userId, car);
+    final cars = await Database(context).addNewCar(userId, car);
 
-    return Response.ok({'message': 'Car updated'});
+    return Response.ok(cars.asMap());
+  }
+
+  @Operation.delete()
+  Future<Response> deleteUserCars(@Bind.query('car_id') int carId) async {
+    // Удаляю авто из базы
+    await Database(context).deleteUserCars(carId);
+
+    return Response.ok({'message': 'Car delete'});
   }
 
   @override
@@ -59,7 +59,7 @@ class UserCarsController extends ResourceController {
       return {
         "200": APIResponse.schema(
           "Success",
-          context.schema["Ok"],
+          UserCars().documentSchema(context),
         )
       };
     } else if (operation.method == "DELETE") {
