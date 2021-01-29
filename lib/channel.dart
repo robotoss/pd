@@ -103,7 +103,7 @@ class AqueductPdChannel extends ApplicationChannel {
 
     router
         .route('/catalog/carParts')
-        // .link(() => Authorizer.bearer(authServer))
+        .link(() => Authorizer.bearer(authServer))
         .link(() => CarPartsController(context));
 
     return router;
