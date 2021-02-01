@@ -7,6 +7,7 @@ import 'package:http/http.dart' as http;
 
 class ArmtekHelper {
   Future<List<PartModel>> getPartsFromSerach(String partNumber) async {
+    List<Resp> armtekResponse = [];
     try {
       // Получаю Модели автомобилей
       final _carModelsResponse = await http.post(
@@ -22,10 +23,15 @@ class ArmtekHelper {
         },
       );
 
-      final armtekResponse =
+      try{
+          armtekResponse =
           detailSearchModelFromJson(_carModelsResponse.body).resp;
 
-      return armtekResponse
+      
+      }catch(error){
+        return <PartModel>[];
+      }
+    return armtekResponse
           .map((part) => PartModel()
             ..catalogPartNumber = part.pin
             ..brand = part.brand
@@ -50,6 +56,7 @@ class ArmtekHelper {
                 : null
             ..isAnalog = part.analog == Analog.X)
           .toList();
+     
     } catch (e) {
       print(e);
       return null;

@@ -11,8 +11,12 @@ class CarPartsController extends ResourceController {
    
      try {
        final parts = await ArmtekHelper().getPartsFromSerach(partNumber);
-      if(parts != null){
-         return Response.ok(parts);
+      if(parts != null ){
+        if(parts.isNotEmpty){
+           return Response.ok(parts);
+        } else {
+          return Response.noContent();
+        }
       } else {
           return Response.badRequest(body: {"error": "Произошла ошибка"});
       }
